@@ -2,6 +2,7 @@ package com.franciszabala.simplewebservice.resource;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.franciszabala.simplewebservice.exception.NoPlanFoundException;
 import com.franciszabala.simplewebservice.model.Plan;
+import com.franciszabala.simplewebservice.model.PlanSimple;
 import com.franciszabala.simplewebservice.service.PlanService;
 
 
@@ -29,6 +31,13 @@ public class PlanResource {
 	@Autowired
 	public PlanResource(PlanService planService) {
 		this.planService = planService;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public Map<String, PlanSimple> getAllPlansFormatted() throws NoPlanFoundException {
+		 return this.planService.getAllPlansMapped();
+
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="all", produces = {
